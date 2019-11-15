@@ -1,0 +1,56 @@
+---
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v2.0
+    command: |
+      "--log.level=DEBUG"
+      "--providers.docker=true"
+      "--providers.docker.exposedbydefault=false"
+      "--entryPoints.websecure.address=:443"
+      "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      "--certificatesresolvers.mytlschallenge.acme.email=sysadmin@z.cash"
+      "--certificatesresolvers.mytlschallenge.acme.storage=/etc/traefik/acme.json"
+      "--certificatesresolvers.ecc.acme.tlschallenge=true"
+      "--certificatesresolvers.ecc.acme.email=sysadmin@z.cash"
+      "--certificatesresolvers.ecc.acme.storage=/etc/traefik/acme.json"
+    ports:
+      - "443:443"
+    volumes:
+      - /srv/traefik/acme.json:/etc/traefik/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  zcash-insight-explorer:
+    build: .
+    environment:
+      - ZCASHD_NETWORK=$ZCASHD_NETWORK
+      - ZCASHD_RPCUSER=$ZCASHD_RPCUSER
+      - ZCASHD_RPCPASSWORD=$ZCASHD_RPCPASSWORD
+      - ZCASHD_ZMQPORT=$ZCASHD_ZMQPORT
+    ports:
+      - "3001:3001"
+    labels:
+      "traefik.enable": "true"
+      "traefik.http.routers.explorer.entrypoints": "websecure"
+      "traefik.http.routers.explorer.rule": "Host(`explorer.$DOMAIN`)"
+      "traefik.http.routers.explorer.tls.certresolver": "mytlschallenge"
+
+  zcashd:
+    image: gcr.io/zcash-web/zcashd
+    environment:
+      - ZCASHD_NETWORK=$ZCASHD_NETWORK
+      - ZCASHD_LOGIPS=$ZCASHD_LOGIPS
+      - ZCASHD_EXPERIMENTALFEATURES=$ZCASHD_EXPERIMENTALFEATURES
+      - ZCASHD_GEN=$ZCASHD_GEN
+      - ZCASHD_RPCUSER=$ZCASHD_RPCUSER
+      - ZCASHD_RPCPASSWORD=$ZCASHD_RPCPASSWORD
+      - ZCASHD_RPCBIND=$ZCASHD_RPCBIND
+      - ZCASHD_ALLOWIP=$ZCASHD_ALLOWIP
+      - ZCASHD_TXINDEX=$ZCASHD_TXINDEX
+      - ZCASHD_INSIGHTEXPLORER=$ZCASHD_INSIGHTEXPLORER
+      - ZCASHD_ZMQPORT=$ZCASHD_ZMQPORT
+      - ZCASHD_ZMQBIND=$ZCASHD_ZMQBIND
+    volumes:
+      - /srv/zcash-params:/srv/zcashd/.zcash-params
+      - /srv/zcash-insight-explorer/.zcashd/zcash:/srv/zcashd/.zcash

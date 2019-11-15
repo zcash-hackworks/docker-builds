@@ -1,0 +1,33 @@
+---
+version: '3'
+
+services:
+  init_container:
+    image: busybox
+    command: |
+      sh -c "chown -R 2001 /srv/zcashd/"
+    volumes:
+      - zcash-params:/srv/zcashd/.zcash-params
+      - zcash:/srv/zcashd/.zcash
+  zcashd:
+    image: gcr.io/zcash-web/zcashd
+    environment:
+      - ZCASHD_NETWORK=$ZCASHD_NETWORK
+      - ZCASHD_LOGIPS=$ZCASHD_LOGIPS
+      - ZCASHD_EXPERIMENTALFEATURES=$ZCASHD_EXPERIMENTALFEATURES
+      - ZCASHD_GEN=$ZCASHD_GEN
+      - ZCASHD_RPCUSER=$ZCASHD_RPCUSER
+      - ZCASHD_RPCPASSWORD=$ZCASHD_RPCPASSWORD
+      - ZCASHD_RPCBIND=$ZCASHD_RPCBIND
+      - ZCASHD_ALLOWIP=$ZCASHD_ALLOWIP
+      - ZCASHD_TXINDEX=$ZCASHD_TXINDEX
+      - ZCASHD_INSIGHTEXPLORER=$ZCASHD_INSIGHTEXPLORER
+      - ZCASHD_ZMQPORT=$ZCASHD_ZMQPORT
+      - ZCASHD_ZMQBIND=$ZCASHD_ZMQBIND
+    volumes:
+      - zcash-params:/srv/zcashd/.zcash-params
+      - zcash:/srv/zcashd/.zcash
+
+volumes:
+  zcash:
+  zcash-params:
