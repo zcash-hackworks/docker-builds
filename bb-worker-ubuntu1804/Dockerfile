@@ -42,6 +42,7 @@ RUN /usr/local/bin/virtualenv venv \
        pyflakes \
        pyblake2 \
        pyzmq \
+       requests \
        twisted[tls]
 
 # Buildbot worker
