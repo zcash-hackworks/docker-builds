@@ -1,0 +1,23 @@
+FROM ubuntu:19.04
+ARG DEBIAN_FRONTEND=noninteractive
+ARG DUMBINIT_VERSION=v1.2.2
+ARG PYTHONVERSION=3.7.5
+RUN apt-get update \
+    && apt-get install -y \
+       build-essential \
+       zlib1g-dev \
+       libncurses5-dev \
+       libgdbm-dev \
+       libnss3-dev \
+       libssl-dev \
+       libreadline-dev \
+       libffi-dev \
+       curl
+WORKDIR /tmp
+RUN curl https://www.python.org/ftp/python/$PYTHONVERSION/Python-$PYTHONVERSION.tar.xz -o python.tar.xz \
+  && tar -xf python.tar.xz \
+  && cd Python-$PYTHONVERSION \
+  && ./configure --enable-optimizations \
+  && make -j 8 \
+  && make altinstall \
+  && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 1

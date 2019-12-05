@@ -1,0 +1,108 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian8/Dockerfile-build-python3.7
+      - --tag=debian8-build-python:3.7
+      - bb-worker-debian8/
+    id: debian8-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian8/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian8:python3.7
+      - bb-worker-debian8/
+    wait_for: ['debian8-build-python']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian9/Dockerfile-build-python3.7
+      - --tag=debian9-build-python:3.7
+      - bb-worker-debian9/
+    id: debian9-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian9/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian9:python3.7
+      - bb-worker-debian9/
+    wait_for: ['debian9-build-python']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian10/Dockerfile-build-python3.7
+      - --tag=debian10-build-python:3.7
+      - bb-worker-debian10/
+    id: debian10-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-debian10/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian10:python3.7
+      - bb-worker-debian10/
+    wait_for: ['debian10-build-python']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1604/Dockerfile-build-python3.7
+      - --tag=ubuntu1604-build-python:3.7
+      - bb-worker-ubuntu1604/
+    id: ubuntu1604-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1604/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+      - bb-worker-ubuntu1604/
+    wait_for: ['ubuntu1604-build-python']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1804/Dockerfile-build-python3.7
+      - --tag=ubuntu1804-build-python:3.7
+      - bb-worker-ubuntu1804/
+    id: ubuntu1804-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1804/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
+      - bb-worker-ubuntu1804/
+    wait_for: ['ubuntu1804-build-python']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1904/Dockerfile-build-python3.7
+      - --tag=ubuntu1904-build-python:3.7
+      - bb-worker-ubuntu1904/
+    id: ubuntu1904-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker-ubuntu1904/Dockerfile.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
+      - bb-worker-ubuntu1904/
+    wait_for: ['ubuntu1904-build-python']
