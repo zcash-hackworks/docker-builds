@@ -34,7 +34,7 @@ if [[ -n "${ZCASHD_ZSHIELDCOINBASE}" ]];then ZCASHD_CMD+=" -zshieldcoinbase=${ZC
 if [[ -n "${ZCASHD_RPCUSER}" ]];then ZCASHD_CMD+=" -rpcuser=${ZCASHD_RPCUSER}";fi
 if [[ -n "${ZCASHD_RPCPASSWORD}" ]];then ZCASHD_CMD+=" -rpcpassword=${ZCASHD_RPCPASSWORD}";fi
 if [[ -n "${ZCASHD_RPCBIND}" ]];then ZCASHD_CMD+=" -rpcbind=${ZCASHD_RPCBIND}";fi
-if [[ -n "${ZCASHD_RPCPORT}" ]];then ZCASHD_CMD+=" -rpcbind=${ZCASHD_RPCPORT}";fi
+if [[ -n "${ZCASHD_RPCPORT}" ]];then ZCASHD_CMD+=" -rpcport=${ZCASHD_RPCPORT}";fi
 if [[ -n "${ZCASHD_ALLOWIP}" ]];then ZCASHD_CMD+=" -rpcallowip=${ZCASHD_ALLOWIP}";fi
 if [[ -n "${ZCASHD_TXINDEX}" ]];then ZCASHD_CMD+=" -txindex";fi
 if [[ -n "${ZCASHD_INSIGHTEXPLORER}" ]];then ZCASHD_CMD+=" -insightexplorer";fi
