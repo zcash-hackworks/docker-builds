@@ -1,0 +1,11 @@
+build-essential
+autoconf
+cmake
+pkg-config
+curl
+git
+wget
+libtool
+lcov
+valgrind
+bsdmainutils

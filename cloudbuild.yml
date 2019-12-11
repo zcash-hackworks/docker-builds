@@ -1,108 +1,129 @@
 steps:
+# Debian 8
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian8/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.debian8-build-python3.7
       - --tag=debian8-build-python:3.7
-      - bb-worker-debian8/
+      - bb-worker/
     id: debian8-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian8/Dockerfile.python3.7
+      - bb-worker/Dockerfile.debian8.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-debian8:python3.7
-      - bb-worker-debian8/
+      - bb-worker/
     wait_for: ['debian8-build-python']
 
+# Debian 9
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian9/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.apt-build-python3.7
       - --tag=debian9-build-python:3.7
-      - bb-worker-debian9/
+      - --build-arg=BASEOS=debian:9
+      - bb-worker/
     id: debian9-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian9/Dockerfile.python3.7
+      - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-debian9:python3.7
-      - bb-worker-debian9/
+      - --build-arg=FROMBASEOS=debian9
+      - --build-arg=BASEOS=debian9
+      - bb-worker/
     wait_for: ['debian9-build-python']
 
+# Debian 10
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian10/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.apt-build-python3.7
       - --tag=debian10-build-python:3.7
-      - bb-worker-debian10/
+      - --build-arg=BASEOS=debian:10
+      - bb-worker/
     id: debian10-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-debian10/Dockerfile.python3.7
+      - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-debian10:python3.7
-      - bb-worker-debian10/
-    wait_for: ['debian10-build-python']
+      - --build-arg=FROMBASEOS=debian10
+      - --build-arg=BASEOS=debian10
+      - bb-worker/
+    wait_for: ['debian9-build-python']
 
+# Ubuntu 16.04
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1604/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.apt-build-python3.7
       - --tag=ubuntu1604-build-python:3.7
-      - bb-worker-ubuntu1604/
+      - --build-arg=BASEOS=ubuntu:16.04
+      - bb-worker/
     id: ubuntu1604-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1604/Dockerfile.python3.7
+      - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
-      - bb-worker-ubuntu1604/
-    wait_for: ['ubuntu1604-build-python']
+      - --build-arg=FROMBASEOS=ubuntu1604
+      - --build-arg=BASEOS=ubuntu1604
+      - bb-worker/
+    wait_for: ['debian9-build-python']
 
+# Ubuntu 18.04
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1804/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.apt-build-python3.7
       - --tag=ubuntu1804-build-python:3.7
-      - bb-worker-ubuntu1804/
+      - --build-arg=BASEOS=ubuntu:18.04
+      - bb-worker/
     id: ubuntu1804-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1804/Dockerfile.python3.7
+      - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
-      - bb-worker-ubuntu1804/
-    wait_for: ['ubuntu1804-build-python']
+      - --build-arg=FROMBASEOS=ubuntu1804
+      - --build-arg=BASEOS=ubuntu1804
+      - bb-worker/
+    wait_for: ['debian9-build-python']
 
+# Ubuntu 19.04
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1904/Dockerfile-build-python3.7
+      - bb-worker/Dockerfile.apt-build-python3.7
       - --tag=ubuntu1904-build-python:3.7
-      - bb-worker-ubuntu1904/
+      - --build-arg=BASEOS=ubuntu:19.04
+      - bb-worker/
     id: ubuntu1904-build-python
     wait_for: ['-']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
-      - bb-worker-ubuntu1904/Dockerfile.python3.7
+      - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
-      - bb-worker-ubuntu1904/
-    wait_for: ['ubuntu1904-build-python']
+      - --build-arg=FROMBASEOS=ubuntu1904
+      - --build-arg=BASEOS=ubuntu1904
+      - bb-worker/
+    wait_for: ['debian9-build-python']
