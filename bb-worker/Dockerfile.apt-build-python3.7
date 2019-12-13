@@ -1,7 +1,6 @@
 ARG BASEOS
 FROM $BASEOS
 ARG DEBIAN_FRONTEND=noninteractive
-ARG DUMBINIT_VERSION=v1.2.2
 ARG PYTHONVERSION=3.7.5
 RUN apt-get update \
     && apt-get install -y \
