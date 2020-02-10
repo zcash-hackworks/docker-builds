@@ -15,7 +15,8 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-dumb-init.python3.7
-      - --tag=gcr.io/zcash-web/bb-worker-debian8:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian8:latest
+      - --tag=gcr.io/zcash-web/bb-worker-debian8:python3.7      
       - --build-arg=FROMBASEOS=debian8
       - --build-arg=BASEOS=debian8
       - bb-worker/
@@ -38,6 +39,7 @@ steps:
       - -f
       - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-debian9:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian9:latest
       - --build-arg=FROMBASEOS=debian9
       - --build-arg=BASEOS=debian9
       - bb-worker/
@@ -60,6 +62,7 @@ steps:
       - -f
       - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-debian10:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian10:latest
       - --build-arg=FROMBASEOS=debian10
       - --build-arg=BASEOS=debian10
       - bb-worker/
@@ -83,6 +86,7 @@ steps:
       - -f
       - bb-worker/Dockerfile.apt-dumb-init.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:latest
       - --build-arg=FROMBASEOS=ubuntu1604
       - --build-arg=BASEOS=ubuntu1604
       - bb-worker/
@@ -105,6 +109,7 @@ steps:
       - -f
       - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1804:latest
       - --build-arg=FROMBASEOS=ubuntu1804
       - --build-arg=BASEOS=ubuntu1804
       - bb-worker/
@@ -127,15 +132,22 @@ steps:
       - -f
       - bb-worker/Dockerfile.apt.python3.7
       - --tag=gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1904:latest
       - --build-arg=FROMBASEOS=ubuntu1904
       - --build-arg=BASEOS=ubuntu1904
       - bb-worker/
     wait_for: ['ubuntu1904-build-python']
 
 images:
-  - gcr.io/zcash-web/bb-worker-debian8
-  - gcr.io/zcash-web/bb-worker-debian9
-  - gcr.io/zcash-web/bb-worker-debian10
-  - gcr.io/zcash-web/bb-worker-ubuntu1604
-  - gcr.io/zcash-web/bb-worker-ubuntu1804
-  - gcr.io/zcash-web/bb-worker-ubuntu1904
+  - gcr.io/zcash-web/bb-worker-debian8:latest
+  - gcr.io/zcash-web/bb-worker-debian8:python3.7
+  - gcr.io/zcash-web/bb-worker-debian9:latest
+  - gcr.io/zcash-web/bb-worker-debian9:python3.7
+  - gcr.io/zcash-web/bb-worker-debian10:latest
+  - gcr.io/zcash-web/bb-worker-debian10:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1604:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1804:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1904:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
