@@ -1,8 +1,7 @@
+timeout: "2h30m0s"
 steps:
-timeout: "2h30m"
 # Debian 8
   - name: 'gcr.io/cloud-builders/docker'
-    timeout: "2h"
     args: 
       - build
       - -f
@@ -24,7 +23,6 @@ timeout: "2h30m"
 
 # Debian 9
   - name: 'gcr.io/cloud-builders/docker'
-    timeout: "2h"
     args: 
       - build
       - -f
@@ -47,7 +45,6 @@ timeout: "2h30m"
 
 # Debian 10
   - name: 'gcr.io/cloud-builders/docker'
-    timeout: "2h"
     args: 
       - build
       - -f
@@ -69,31 +66,30 @@ timeout: "2h30m"
     wait_for: ['debian10-build-python']
 
 # Ubuntu 16.04
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   timeout: "2h"
-  #   args: 
-  #     - build
-  #     - -f
-  #     - bb-worker/Dockerfile.apt-build-python3.7
-  #     - --tag=ubuntu1604-build-python:3.7
-  #     - --build-arg=BASEOS=ubuntu:16.04
-  #     - bb-worker/
-  #   id: ubuntu1604-build-python
-  #   wait_for: ['-']
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: 
-  #     - build
-  #     - -f
-  #     - bb-worker/Dockerfile.apt-dumb-init.python3.7
-  #     - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
-  #     - --build-arg=FROMBASEOS=ubuntu1604
-  #     - --build-arg=BASEOS=ubuntu1604
-  #     - bb-worker/
-  #   wait_for: ['ubuntu1604-build-python']
+  - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
+    args: 
+      - build
+      - -f
+      - bb-worker/Dockerfile.apt-build-python3.7
+      - --tag=ubuntu1604-build-python:3.7
+      - --build-arg=BASEOS=ubuntu:16.04
+      - bb-worker/
+    id: ubuntu1604-build-python
+    wait_for: ['-']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker/Dockerfile.apt-dumb-init.python3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+      - --build-arg=FROMBASEOS=ubuntu1604
+      - --build-arg=BASEOS=ubuntu1604
+      - bb-worker/
+    wait_for: ['ubuntu1604-build-python']
 
 # Ubuntu 18.04
   - name: 'gcr.io/cloud-builders/docker'
-    timeout: "2h"
     args: 
       - build
       - -f
@@ -116,7 +112,6 @@ timeout: "2h30m"
 
 # Ubuntu 19.04
   - name: 'gcr.io/cloud-builders/docker'
-    timeout: "2h"
     args: 
       - build
       - -f
@@ -136,3 +131,11 @@ timeout: "2h30m"
       - --build-arg=BASEOS=ubuntu1904
       - bb-worker/
     wait_for: ['ubuntu1904-build-python']
+
+images:
+  - gcr.io/zcash-web/bb-worker-debian8
+  - gcr.io/zcash-web/bb-worker-debian9
+  - gcr.io/zcash-web/bb-worker-debian10
+  - gcr.io/zcash-web/bb-worker-ubuntu1604
+  - gcr.io/zcash-web/bb-worker-ubuntu1804
+  - gcr.io/zcash-web/bb-worker-ubuntu1904
