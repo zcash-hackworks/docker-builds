@@ -1,5 +1,5 @@
 steps:
-  timeout: 60000
+  timeout: "2h"
 # Debian 8
   - name: 'gcr.io/cloud-builders/docker'
     args: 
