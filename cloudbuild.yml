@@ -1,7 +1,7 @@
 steps:
-  timeout: "2h"
 # Debian 8
   - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
     args: 
       - build
       - -f
@@ -23,6 +23,7 @@ steps:
 
 # Debian 9
   - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
     args: 
       - build
       - -f
@@ -45,6 +46,7 @@ steps:
 
 # Debian 10
   - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
     args: 
       - build
       - -f
@@ -67,6 +69,7 @@ steps:
 
 # Ubuntu 16.04
   # - name: 'gcr.io/cloud-builders/docker'
+  #   timeout: "2h"
   #   args: 
   #     - build
   #     - -f
@@ -89,6 +92,7 @@ steps:
 
 # Ubuntu 18.04
   - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
     args: 
       - build
       - -f
@@ -111,6 +115,7 @@ steps:
 
 # Ubuntu 19.04
   - name: 'gcr.io/cloud-builders/docker'
+    timeout: "2h"
     args: 
       - build
       - -f
