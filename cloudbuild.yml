@@ -1,4 +1,5 @@
 steps:
+  timeout: 60000
 # Debian 8
   - name: 'gcr.io/cloud-builders/docker'
     args: 
