@@ -1,0 +1,48 @@
+FROM debian:8
+ARG DEBIAN_FRONTEND=noninteractive
+ARG PYTHONVERSION=3.7.5
+ARG OPENSSLVERSION=1.0.2t
+RUN apt-get update \
+    && apt-get install -y \
+       build-essential \
+       checkinstall \
+       libc6-dev \
+       libbz2-dev \
+       libsqlite3-dev \
+       tk-dev \
+       zlib1g-dev \
+       libncurses5-dev \
+       libgdbm-dev \
+       libnss3-dev \
+       libreadline-dev \
+       libffi-dev \
+       uuid-dev \
+       curl
+WORKDIR /usr/src
+
+ENV LDFLAGS "-L/usr/local/lib/"
+ENV LD_LIBRARY_PATH "/usr/local/lib/"
+ENV CPPFLAGS "-I/usr/local/include -I/usr/local/include/openssl"
+# https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
+RUN curl https://www.openssl.org/source/openssl-$OPENSSLVERSION.tar.gz | tar xz \
+  && cd openssl-$OPENSSLVERSION \
+  && ./config shared --prefix=/usr/local/ \
+  && make \
+  && make install \
+  && mkdir lib 
+RUN cd openssl-$OPENSSLVERSION \
+  && cp *.so* lib/ \
+  && cp *.a lib/ \
+  && cp *.pc lib/
+
+WORKDIR /tmp
+
+RUN curl https://www.python.org/ftp/python/$PYTHONVERSION/Python-$PYTHONVERSION.tar.xz -o python.tar.xz \
+  && tar -xf python.tar.xz
+
+WORKDIR /tmp/Python-$PYTHONVERSION
+
+RUN ./configure  --with-openssl=/usr/src/openssl-$OPENSSLVERSION
+RUN  make -j 8
+RUN  make altinstall \
+  && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 1
