@@ -1,15 +1,30 @@
 timeout: "2h30m0s"
 steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: cacheLatest
+    entrypoint: 'bash'
+    args:
+     - '-c'
+     - |
+        ( docker pull gcr.io/zcash-web/bb-worker-debian8:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-debian9:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-debian10:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1604:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1804:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1904:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-centos8:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-arch:python3 || exit 0 );
+
 # Debian 8
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
       - -f
       - bb-worker/Dockerfile.debian8-build-python3.7
-      - --tag=debian8-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian8-build-python:3.7
       - bb-worker/
     id: debian8-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -28,11 +43,11 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-build-python3.7
-      - --tag=debian9-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian9-build-python:3.7
       - --build-arg=BASEOS=debian:9
       - bb-worker/
     id: debian9-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -51,11 +66,11 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-build-python3.7
-      - --tag=debian10-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-debian10-build-python:3.7
       - --build-arg=BASEOS=debian:10
       - bb-worker/
     id: debian10-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -75,11 +90,11 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-build-python3.7
-      - --tag=ubuntu1604-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1604-build-python:3.7
       - --build-arg=BASEOS=ubuntu:16.04
       - bb-worker/
     id: ubuntu1604-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -98,11 +113,11 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-build-python3.7
-      - --tag=ubuntu1804-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1804-build-python:3.7
       - --build-arg=BASEOS=ubuntu:18.04
       - bb-worker/
     id: ubuntu1804-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -121,11 +136,11 @@ steps:
       - build
       - -f
       - bb-worker/Dockerfile.apt-build-python3.7
-      - --tag=ubuntu1904-build-python:3.7
+      - --tag=gcr.io/zcash-web/bb-worker-ubuntu1904-build-python:3.7
       - --build-arg=BASEOS=ubuntu:19.04
       - bb-worker/
     id: ubuntu1904-build-python
-    wait_for: ['-']
+    wait_for: ['cacheLatest']
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - build
@@ -138,16 +153,47 @@ steps:
       - bb-worker/
     wait_for: ['ubuntu1904-build-python']
 
+# Centos8
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker/Dockerfile.centos8
+      - --tag=gcr.io/zcash-web/bb-worker-centos8:python3
+      - --tag=gcr.io/zcash-web/bb-worker-centos8:latest
+      - bb-worker/
+    wait_for: ['cacheLatest']
+
+# Arch
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - build
+      - -f
+      - bb-worker/Dockerfile.arch
+      - --tag=gcr.io/zcash-web/bb-worker-arch:python3
+      - --tag=gcr.io/zcash-web/bb-worker-arch:latest
+      - bb-worker/
+    wait_for: ['cacheLatest']    
 images:
+  - gcr.io/zcash-web/bb-worker-debian8-build-python:3.7
   - gcr.io/zcash-web/bb-worker-debian8:latest
   - gcr.io/zcash-web/bb-worker-debian8:python3.7
+  - gcr.io/zcash-web/bb-worker-debian9-build-python:3.7
   - gcr.io/zcash-web/bb-worker-debian9:latest
   - gcr.io/zcash-web/bb-worker-debian9:python3.7
+  - gcr.io/zcash-web/bb-worker-debian10-build-python:3.7
   - gcr.io/zcash-web/bb-worker-debian10:latest
   - gcr.io/zcash-web/bb-worker-debian10:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1604-build-python:3.7
   - gcr.io/zcash-web/bb-worker-ubuntu1604:latest
   - gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1804-build-python:3.7
   - gcr.io/zcash-web/bb-worker-ubuntu1804:latest
   - gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1904-build-python:3.7
   - gcr.io/zcash-web/bb-worker-ubuntu1904:latest
   - gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
+  - gcr.io/zcash-web/bb-worker-centos8:python3
+  - gcr.io/zcash-web/bb-worker-centos8:latest
+  - gcr.io/zcash-web/bb-worker-arch:python3
+  - gcr.io/zcash-web/bb-worker-arch:latest
