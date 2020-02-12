@@ -1,5 +1,5 @@
 ARG FROMBASEOS
-FROM $FROMBASEOS-build-python:3.7
+FROM gcr.io/zcash-web/bb-worker-$FROMBASEOS-build-python:3.7
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DUMBINIT_VERSION=1.2.2
 

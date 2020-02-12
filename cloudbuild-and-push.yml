@@ -174,3 +174,26 @@ steps:
       - --tag=gcr.io/zcash-web/bb-worker-arch:latest
       - bb-worker/
     wait_for: ['cacheLatest']    
+images:
+  - gcr.io/zcash-web/bb-worker-debian8-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-debian8:latest
+  - gcr.io/zcash-web/bb-worker-debian8:python3.7
+  - gcr.io/zcash-web/bb-worker-debian9-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-debian9:latest
+  - gcr.io/zcash-web/bb-worker-debian9:python3.7
+  - gcr.io/zcash-web/bb-worker-debian10-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-debian10:latest
+  - gcr.io/zcash-web/bb-worker-debian10:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1604-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1604:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1604:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1804-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1804:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1804:python3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1904-build-python:3.7
+  - gcr.io/zcash-web/bb-worker-ubuntu1904:latest
+  - gcr.io/zcash-web/bb-worker-ubuntu1904:python3.7
+  - gcr.io/zcash-web/bb-worker-centos8:python3
+  - gcr.io/zcash-web/bb-worker-centos8:latest
+  - gcr.io/zcash-web/bb-worker-arch:python3
+  - gcr.io/zcash-web/bb-worker-arch:latest
