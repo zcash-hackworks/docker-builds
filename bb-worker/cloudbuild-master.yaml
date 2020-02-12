@@ -11,6 +11,8 @@ steps:
         ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1604:latest || exit 0 );
         ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1804:latest || exit 0 );
         ( docker pull gcr.io/zcash-web/bb-worker-ubuntu1904:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-centos:latest || exit 0 );
+        ( docker pull gcr.io/zcash-web/bb-worker-arch:latest || exit 0 );
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', 'bb-worker/Dockerfile.debian8', '--tag=gcr.io/zcash-web/bb-worker-debian8', 'bb-worker/', '--cache-from', 'gcr.io/zcash-web/bb-worker-debian8:latest']
@@ -30,6 +32,12 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', 'bb-worker/Dockerfile.ubuntu1904', '--tag=gcr.io/zcash-web/bb-worker-ubuntu1904', 'bb-worker/', '--cache-from', 'gcr.io/zcash-web/bb-worker-ubuntu1904:latest']
     waitFor: ['cacheLatest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'bb-worker/Dockerfile.centos', '--tag=gcr.io/zcash-web/bb-worker-centos', 'bb-worker/', '--cache-from', 'gcr.io/zcash-web/bb-worker-centos:latest']
+    waitFor: ['cacheLatest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'bb-worker/Dockerfile.arch', '--tag=gcr.io/zcash-web/bb-worker-arch', 'bb-worker/', '--cache-from', 'gcr.io/zcash-web/bb-worker-arch:latest']
+    waitFor: ['cacheLatest']
 images:
   - gcr.io/zcash-web/bb-worker-debian8
   - gcr.io/zcash-web/bb-worker-debian9
@@ -37,4 +45,6 @@ images:
   - gcr.io/zcash-web/bb-worker-ubuntu1604
   - gcr.io/zcash-web/bb-worker-ubuntu1804
   - gcr.io/zcash-web/bb-worker-ubuntu1904
+  - gcr.io/zcash-web/bb-worker-centos
+  - gcr.io/zcash-web/bb-worker-arch
 timeout: 1200s
