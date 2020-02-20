@@ -57,9 +57,13 @@ spec:
           The build context used by Kaniko
           (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
         default: /workspace/docker-source
+      - name: fromBaseOS
+        type: string
+        description: The FROM OS string for the upstream image
+        default: debian:10        
       - name: baseOS
         type: string
-        description: The base OS string for the upstream image
+        description: The base OS string for the upstream packages
         default: debian10
   outputs:
     resources:
@@ -78,4 +82,5 @@ spec:
         - --dockerfile=$(inputs.params.pathToDockerFile)
         - --destination=$(outputs.resources.builtImage.url)
         - --context=$(inputs.params.pathToContext)
-        - --build-arg=$(inputes.params.baseOS)               
+        - --build-arg=BASEOS=$(inputes.params.baseOS)
+        - --build-arg=FROMBASEOS=$(inputes.params.fromBaseOS)

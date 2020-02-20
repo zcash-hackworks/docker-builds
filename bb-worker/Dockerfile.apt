@@ -1,11 +1,9 @@
 ARG FROMBASEOS
-FROM gcr.io/zcash-web/bb-worker-$FROMBASEOS-build-python:3.7
-ARG DEBIAN_FRONTEND=noninteractive
+FROM $FROMBASEOS
 
-ADD apt-package-list.txt /tmp/apt-package-list.txt
-RUN apt-get update \
-    && apt-get install -y $(tr "\n" " " < /tmp/apt-package-list.txt) \
-    && apt-get install -y dumb-init
+ARG DUMBINIT_VERSION=1.2.2
+RUN wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMBINIT_VERSION}/dumb-init_${DUMBINIT_VERSION}_amd64
+RUN chmod +x /usr/bin/dumb-init
 
 # Buildbot user
 ARG BUILDBOT_USER=zcbbworker

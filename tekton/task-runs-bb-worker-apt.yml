@@ -2,7 +2,33 @@
 apiVersion: tekton.dev/v1alpha1
 kind: TaskRun
 metadata:
-  name: bb-worker-debian9-task-run
+  name: task-run-bb-worker-debian10-build
+spec:
+  serviceAccountName: zcashsysadmin-service
+  taskRef:
+    name: build-docker-apt-bb-worker
+  inputs:
+    resources:
+      - name: docker-source
+        resourceRef:
+          name: docker-builds-git
+    params:
+      - name: pathToDockerFile
+        value: /workspace/docker-source/bb-worker/Dockerfile-build.apt
+      - name: pathToContext
+        value: /workspace/docker-source/bb-worker/
+      - name: fromBaseOS
+        value: debian:10        
+  outputs:
+    resources:
+      - name: builtImage
+        resourceRef:
+          name: docker-build-image-bb-worker-debian10-build
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: task-run-bb-worker-debian10
 spec:
   serviceAccountName: zcashsysadmin-service
   taskRef:
@@ -17,8 +43,12 @@ spec:
         value: /workspace/docker-source/bb-worker/Dockerfile.apt
       - name: pathToContext
         value: /workspace/docker-source/bb-worker/
+      - name: fromBaseOS
+        value: debian:10        
+      - name: baseOS
+        type: debian10
   outputs:
     resources:
       - name: builtImage
         resourceRef:
-          name: docker-build-image-bb-worker-debian9
+          name: docker-build-image-bb-worker-debian10          
