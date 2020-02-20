@@ -2,11 +2,11 @@
 apiVersion: tekton.dev/v1alpha1
 kind: TaskRun
 metadata:
-  name: build-docker-image-from-git-source-task-run
+  name: bb-worker-debian9-task-run
 spec:
   serviceAccountName: zcashsysadmin-service
   taskRef:
-    name: build-docker-image-from-git-source
+    name: build-docker-apt-bb-worker
   inputs:
     resources:
       - name: docker-source
@@ -14,11 +14,11 @@ spec:
           name: docker-builds-git
     params:
       - name: pathToDockerFile
-        value: /workspace/docker-source/bb-worker/Dockerfile.debian8
+        value: /workspace/docker-source/bb-worker/Dockerfile.apt
       - name: pathToContext
         value: /workspace/docker-source/bb-worker/
   outputs:
     resources:
       - name: builtImage
         resourceRef:
-          name: docker-build-image-bb-worker-debian8
+          name: docker-build-image-bb-worker-debian9

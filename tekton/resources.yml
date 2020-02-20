@@ -12,6 +12,56 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
+  name: docker-build-image-bb-worker-debian9
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-debian9    
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-debian10
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-debian10  
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-centos8
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-centos8                
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-arch
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-arch           
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-zcashd
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/zcashd          
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
   name: docker-builds-git
 spec:
   type: git
