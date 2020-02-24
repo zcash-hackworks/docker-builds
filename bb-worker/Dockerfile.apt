@@ -1,5 +1,6 @@
 ARG BASEOS
-FROM electriccoinco/bb-worker-$BASEOS-build
+ARG BASEOS_BUILD_TAG=latest
+FROM electriccoinco/bb-worker-$BASEOS-build:$BASEOS_BUILD_TAG
 
 ARG DUMBINIT_VERSION=1.2.2
 RUN wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMBINIT_VERSION}/dumb-init_${DUMBINIT_VERSION}_amd64
