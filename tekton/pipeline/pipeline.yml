@@ -1,0 +1,53 @@
+---      
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: build-bb-worker-image-pipeline
+spec:
+  resources:
+    - name: docker-source
+      type: git
+  params:
+    - name: buildDockerFile
+      type: string
+      description: The path to the build dockerfile to build
+    - name: workerDockerFile
+      type: string
+      description: The path to the worker dockerfile to build      
+    - name: pathToContext
+      type: string
+      description: The build context used by Kaniko
+    - name: imageUrl
+      type: string
+      description: Url of image repository
+    - name: imageTag
+      type: string
+      description: Tag to apply to the built image
+      default: latest    
+    - name: fromBaseOS
+      description: Base Docker image to build from
+    - name: baseOS
+      description: Buildbot worker image to build      
+  tasks:
+  - name: build-bb-worker-image
+    taskRef:
+      name: build-bb-worker-image
+    params:
+      - name: buildDockerFile
+        value: "$(params.buildDockerFile)"
+      - name: workerDockerFile
+        value: "$(params.workerDockerFile)"
+      - name: pathToContext
+        value: "$(params.pathToContext)"
+      - name: imageUrl
+        value: "$(params.imageUrl)"        
+      - name: imageTag
+        value: "$(params.imageTag)"
+      - name: fromBaseOS
+        value: "$(params.fromBaseOS)"
+      - name: baseOS
+        value: "$(params.baseOS)"        
+    resources:
+      inputs:
+        - name: docker-source
+          resource: docker-source

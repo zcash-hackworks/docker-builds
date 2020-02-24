@@ -52,6 +52,66 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
+  name: docker-build-image-bb-worker-ubuntu1604-build
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1604-build       
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-ubuntu1604
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1604  
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-ubuntu1804-build
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1804-build       
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-ubuntu1804
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1804  
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-ubuntu1904-build
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1904-build       
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-build-image-bb-worker-ubuntu1904
+spec:
+  type: image
+  params:
+    - name: url
+      value: electriccoinco/bb-worker-ubuntu1904              
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
   name: docker-build-image-bb-worker-centos8
 spec:
   type: image

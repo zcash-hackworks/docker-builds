@@ -1,0 +1,49 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: build-bb-worker-image
+spec:
+  inputs:
+    resources:
+      - name: docker-source
+        type: git
+    params:
+      - name: buildDockerFile
+        type: string
+        description: The path to the build dockerfile to build
+      - name: workerDockerFile
+        type: string
+        description: The path to the worker dockerfile to build       
+      - name: pathToContext
+        description: The path to the build context, used by Kaniko - within the workspace
+      - name: imageUrl
+        description: Url of image repository
+      - name: imageTag
+        description: Tag to apply to the built image
+        default: "latest"
+      - name: fromBaseOS
+        type: string
+        description: The FROM OS string for the upstream image
+      - name: baseOS
+        type: string
+        description: The baseOS string for the image        
+  steps:
+    - name: build-and-push-builder-image
+      image: gcr.io/kaniko-project/executor
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(inputs.params.buildDockerFile)
+        - --destination=$(inputs.params.imageUrl)-build:$(inputs.params.imageTag)
+        - --context=/workspace/docker-source/$(inputs.params.pathToContext)
+        - --build-arg=FROMBASEOS=$(inputs.params.fromBaseOS)
+    - name: build-and-push-worker-image
+      image: gcr.io/kaniko-project/executor
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(inputs.params.workerDockerFile)
+        - --destination=$(inputs.params.imageUrl):$(inputs.params.imageTag)
+        - --context=/workspace/docker-source/$(inputs.params.pathToContext)
+        - --build-arg=BASEOS=$(inputs.params.baseOS)          

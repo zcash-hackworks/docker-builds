@@ -82,5 +82,5 @@ spec:
         - --dockerfile=$(inputs.params.pathToDockerFile)
         - --destination=$(outputs.resources.builtImage.url)
         - --context=$(inputs.params.pathToContext)
-        - --build-arg=BASEOS=$(inputes.params.baseOS)
-        - --build-arg=FROMBASEOS=$(inputes.params.fromBaseOS)
+        - --build-arg=BASEOS=$(inputs.params.baseOS)
+        - --build-arg=FROMBASEOS=$(inputs.params.fromBaseOS)

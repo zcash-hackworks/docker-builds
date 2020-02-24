@@ -44,9 +44,9 @@ spec:
       - name: pathToContext
         value: /workspace/docker-source/bb-worker/
       - name: fromBaseOS
-        value: debian:10        
+        value: electriccoinco/bb-worker-debian10-build        
       - name: baseOS
-        type: debian10
+        value: debian10
   outputs:
     resources:
       - name: builtImage
