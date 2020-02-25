@@ -34,8 +34,7 @@ spec:
       command:
         - /kaniko/executor
       args:
-        # - --cache=true
-        # - --cache-ttl=24hours
+        - --cache=true
         - --dockerfile=$(inputs.params.buildDockerFile)
         - --destination=$(inputs.params.imageUrl)-build:$(inputs.params.imageTag)
         - --context=/workspace/docker-source/$(inputs.params.pathToContext)
@@ -45,8 +44,7 @@ spec:
       command:
         - /kaniko/executor
       args:
-        # - --cache=true
-        # - --cache-ttl=24hours      
+        - --cache=true
         - --dockerfile=$(inputs.params.workerDockerFile)
         - --destination=$(inputs.params.imageUrl):$(inputs.params.imageTag)
         - --context=/workspace/docker-source/$(inputs.params.pathToContext)

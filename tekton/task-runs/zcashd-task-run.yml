@@ -1,0 +1,24 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: zcashd-task-run
+spec:
+  serviceAccountName: zcashsysadmin-service
+  taskRef:
+    name: build-docker-image-from-git-source
+  inputs:
+    resources:
+      - name: docker-source
+        resourceRef:
+          name: docker-builds-git
+    params:
+      - name: pathToDockerFile
+        value: /workspace/docker-source/zcashd/Dockerfile
+      - name: pathToContext
+        value: /workspace/docker-source/zcashd/
+  outputs:
+    resources:
+      - name: builtImage
+        resourceRef:
+          name: docker-build-image-zcashd         
