@@ -30,20 +30,25 @@ spec:
         description: The baseOS string for the image        
   steps:
     - name: build-and-push-builder-image
-      image: gcr.io/kaniko-project/executor
+      image: gcr.io/kaniko-project/executor:debug-v0.16.0
       command:
         - /kaniko/executor
       args:
+        # - --cache=true
+        # - --cache-ttl=24hours
         - --dockerfile=$(inputs.params.buildDockerFile)
         - --destination=$(inputs.params.imageUrl)-build:$(inputs.params.imageTag)
         - --context=/workspace/docker-source/$(inputs.params.pathToContext)
         - --build-arg=FROMBASEOS=$(inputs.params.fromBaseOS)
     - name: build-and-push-worker-image
-      image: gcr.io/kaniko-project/executor
+      image: gcr.io/kaniko-project/executor:debug-v0.16.0
       command:
         - /kaniko/executor
       args:
+        # - --cache=true
+        # - --cache-ttl=24hours      
         - --dockerfile=$(inputs.params.workerDockerFile)
         - --destination=$(inputs.params.imageUrl):$(inputs.params.imageTag)
         - --context=/workspace/docker-source/$(inputs.params.pathToContext)
-        - --build-arg=BASEOS=$(inputs.params.baseOS)          
+        - --build-arg=BASEOS=$(inputs.params.baseOS)
+        - --build-arg=BASEOS_BUILD_TAG=$(inputs.params.imageTag)
