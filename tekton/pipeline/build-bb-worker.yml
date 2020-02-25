@@ -50,5 +50,6 @@ spec:
         - --dockerfile=$(inputs.params.workerDockerFile)
         - --destination=$(inputs.params.imageUrl):$(inputs.params.imageTag)
         - --context=/workspace/docker-source/$(inputs.params.pathToContext)
+        - --build-arg=FROMBASEOS=$(inputs.params.baseOS)
+        - --build-arg=FROMBASEOS_BUILD_TAG=$(inputs.params.imageTag)
         - --build-arg=BASEOS=$(inputs.params.baseOS)
-        - --build-arg=BASEOS_BUILD_TAG=$(inputs.params.imageTag)
