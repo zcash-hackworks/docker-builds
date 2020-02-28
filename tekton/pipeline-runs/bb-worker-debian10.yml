@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineRun
 metadata:
-  generateName: testing-pr-ubuntu1604-
+  generateName: testing-pr-debian10-
 spec:
   pipelineRef:
     name: build-bb-worker-image-pipeline
@@ -11,13 +11,13 @@ spec:
         name: docker-builds-git
   params:
     - name: buildImageUrl
-      value: electriccoinco/bb-worker-ubuntu1604-build
+      value: electriccoinco/bb-worker-debian10-build
     - name: imageUrl
-      value: electriccoinco/bb-worker-ubuntu1604      
+      value: electriccoinco/bb-worker-debian10      
     - name: fromBaseOS
-      value: "ubuntu:16.04"
+      value: "debian:10"
     - name: baseOS
-      value: "ubuntu1604"      
+      value: "debian10"      
     - name: buildDockerFile
       value: /workspace/docker-source/bb-worker/Dockerfile-build.apt
     - name: workerDockerFile
