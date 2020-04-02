@@ -2,15 +2,16 @@
 
 set -eo pipefail
 
+if [[ ${1} == "--version" ]];then
+  zcashd --version
+  exit 0
+fi
+
 env | sort | grep ZCASHD || true
-
-
 export ZCASHD_CMD='zcashd -printtoconsole'
 
 if [[ ! -n ${ZCASHD_NETWORK} ]];then
-  echo "ZCASHD_NETWORK must be set"
-  echo "For example: docker run --rm -e ZCASHD_NETWORK=testnet gcr.io/zcash-web/zcashd"
-  exit 1
+  export ZCASHD_NETWORK=mainnet
 fi
 
 case ${ZCASHD_NETWORK} in
