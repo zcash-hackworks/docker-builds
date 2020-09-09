@@ -41,17 +41,17 @@ for thissite in $SITENAMES; do
 
     # create backup
     # We don't really do this because Pantheon already creates scheduled backups - Remove to just download those
-    terminus backup:create "$thissite"."$thisenv"
+    ${HOME}/vendor/bin/terminus backup:create "$thissite"."$thisenv"
 
     # iterate through backup elements
     for element in $ELEMENTS; do
       # download current site backups
       if [[ $element == "db" ]]; then
-        terminus backup:get --element="$element" --to="$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$DBEXTENSION "$thissite"."$thisenv"
+        ${HOME}/vendor/bin/terminus backup:get --element="$element" --to="$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$DBEXTENSION "$thissite"."$thisenv"
         # Upload database backup to Google Cloud Bucket: website-backups-pantheon
         gsutil cp "$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$DBEXTENSION gs://website-backups-pantheon/"$BACKUPDIR"/
       else
-        terminus backup:get --element="$element" --to="$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$EXTENSION "$thissite"."$thisenv"
+        ${HOME}/vendor/bin/terminus backup:get --element="$element" --to="$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$EXTENSION "$thissite"."$thisenv"
         # Upload files and code backups to Google Cloud Bucket: website-backups-pantheon
         gsutil cp "$BACKUPDIR"/"$thissite".$thisenv."$element"."$BACKUPDATE".$EXTENSION gs://website-backups-pantheon/"$BACKUPDIR"/
       fi
